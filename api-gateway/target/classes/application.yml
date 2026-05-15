@@ -8,10 +8,18 @@ spring:
   cloud:
     gateway:
       routes:
+
+        # Usuarios
         - id: usuarios-service
-          uri: lb://usuarios-service
+          uri: lb://USUARIOS-SERVICE
           predicates:
             - Path=/usuarios/**
+
+        # Reservas
+        - id: reserva-service
+          uri: lb://RESERVA-SERVICE
+          predicates:
+            - Path=/reservas/**
 
 eureka:
   client:
