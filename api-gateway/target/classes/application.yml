@@ -1,0 +1,42 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+
+  cloud:
+    gateway:
+      routes:
+
+        # USUARIO SERVICE
+        - id: usuario-service
+          uri: lb://usuario-service
+          predicates:
+            - Path=/usuarios/**
+
+        # RESERVA SERVICE
+        - id: reserva-service
+          uri: lb://reserva-service
+          predicates:
+            - Path=/reservas/**
+
+        # MENU SERVICE
+        - id: menu-service
+          uri: lb://menu-service
+          predicates:
+            - Path=/menu/**
+
+        # MESA SERVICE
+        - id: mesa-service
+          uri: lb://mesa-service
+          predicates:
+            - Path=/mesas/**
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+  instance:
+    prefer-ip-address: true
