@@ -1,0 +1,5 @@
+com\cafe\mesas_service\MesasServiceApplication.class
+com\cafe\mesas_service\controller\MesaController.class
+com\cafe\mesas_service\service\MesaService.class
+com\cafe\mesas_service\repository\MesaRepository.class
+com\cafe\mesas_service\model\Mesa.class
