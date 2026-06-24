@@ -1,0 +1,11 @@
+com\reservas\reserva_service\config\SwaggerConfig.class
+com\reservas\reserva_service\repository\ReservaRepository.class
+com\reservas\reserva_service\controller\ReservaController.class
+com\reservas\reserva_service\entity\Reserva$ReservaBuilder.class
+com\reservas\reserva_service\service\ReservaService.class
+com\reservas\reserva_service\client\ClienteClient.class
+com\reservas\reserva_service\controller\TestFeignController.class
+com\reservas\reserva_service\config\DataLoader.class
+com\reservas\reserva_service\hateoas\ReservaModelAssembler.class
+com\reservas\reserva_service\entity\Reserva.class
+com\reservas\reserva_service\ReservaServiceApplication.class
