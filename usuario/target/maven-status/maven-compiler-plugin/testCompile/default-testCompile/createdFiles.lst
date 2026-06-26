@@ -1,0 +1,6 @@
+com\cafeteria\usuario\service\UsuarioServiceTest.class
+com\cafeteria\usuario\UsuarioApplicationTests.class
+com\cafeteria\usuario\model\UsuarioTest.class
+com\cafeteria\usuario\controller\UsuarioControllerTest.class
+com\cafeteria\usuario\service\UsuarioFakerServiceTest.class
+com\cafeteria\usuario\dto\UsuarioRequestDTOTest.class

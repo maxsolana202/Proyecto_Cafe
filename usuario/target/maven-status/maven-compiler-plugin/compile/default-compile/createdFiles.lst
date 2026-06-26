@@ -1,0 +1,10 @@
+com\cafeteria\usuario\dto\UsuarioResponseDTO.class
+com\cafeteria\usuario\controller\UsuarioController.class
+com\cafeteria\usuario\service\UsuarioFakerService.class
+com\cafeteria\usuario\UsuarioApplication.class
+com\cafeteria\usuario\repository\UsuarioRepository.class
+com\cafeteria\usuario\dto\UsuarioRequestDTO.class
+com\cafeteria\usuario\service\UsuarioService.class
+com\cafeteria\usuario\exception\GlobalExceptionHandler.class
+com\cafeteria\usuario\model\Usuario.class
+com\cafeteria\usuario\client\AuthClient.class

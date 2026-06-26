@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  # --- SERVICIO 1: LA BASE DE DATOS SQL (MYSQL) ---
+  mysql-db:
+    image: mysql:8.0
+    container_name: mysql-contenedor
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: cafeteria_usuarios
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  # --- SERVICIO 2: TU MICROSERVICIO DE USUARIOS ---
+  usuario-service:
+    build: . # <-- Indica que el Dockerfile está en esta misma carpeta
+    container_name: usuario-service-contenedor
+    ports:
+      - "8081:8081" # <-- El puerto en el que corre tu Spring Boot
+    depends_on:
+      - mysql-db # <-- Espera a que la base de datos encienda primero
+    environment:
+      # Reemplazamos la conexión local por la de Docker de forma automática
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/cafeteria_db?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_JPA_SHOW_SQL: 'true'
+
+volumes:
+  mysql_data:
