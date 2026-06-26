@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  # --- BASE DE DATOS ---
+  mysql-db:
+    image: mysql:8.0
+    container_name: mysql-contenedor
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_DATABASE=cafeteria_usuarios
+      - MYSQL_ROOT_PASSWORD=root
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  # --- MICROSERVICIO: USUARIOS ---
+  usuario-service:
+    build: .
+    container_name: usuario-service-contenedor
+    ports:
+      - "8081:8081"
+    depends_on:
+      - mysql-db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/cafeteria_usuarios?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+
+  # --- MICROSERVICIO: MENÚ ---
+  menu-service:
+    build: ../menu # <-- Asume que la carpeta en tu Escritorio se llama exactamente 'menu'
+    container_name: menu-service-contenedor
+    ports:
+      - "8083:8081" # <-- Lo mapeamos al puerto 8083 para que no choque con usuarios
+    depends_on:
+      - mysql-db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mariadb://mysql-db:3306/cafeteria_menu?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+      SPRING_FLYWAY_USER: root
+      SPRING_FLYWAY_PASSWORD: root
+
+volumes:
+  mysql_data:

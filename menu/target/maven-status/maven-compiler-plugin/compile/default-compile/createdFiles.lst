@@ -1,0 +1,11 @@
+com\cafeteria\menu\dto\ProductoResponseDTO.class
+com\cafeteria\menu\dto\ProductoRequestDTO.class
+com\cafeteria\menu\client\MenuClient.class
+com\cafeteria\menu\config\DataInitializer.class
+com\cafeteria\menu\exception\GlobalExceptionHandler.class
+com\cafeteria\menu\config\AppConfig.class
+com\cafeteria\menu\MenuApplication.class
+com\cafeteria\menu\service\ProductoService.class
+com\cafeteria\menu\controller\ProductoController.class
+com\cafeteria\menu\repository\ProductoRepository.class
+com\cafeteria\menu\model\Producto.class

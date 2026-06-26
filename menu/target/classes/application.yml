@@ -1,0 +1,37 @@
+server:
+  port: 8083
+
+spring:
+  application:
+    name: menu
+
+  datasource:
+    url: jdbc:mariadb://localhost:3306/cafeteria_menu?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    username: root
+    password: root # <-- Corregido para Docker
+    driver-class-name: org.mariadb.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update # <-- Al usar Flyway, lo ideal es usar 'validate' para que respete las migraciones
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQLDialect
+
+  # Flyway 100% activo para armar la base de datos cafeteria_menu
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    user: root
+    password: root
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    prefer-ip-address: true
