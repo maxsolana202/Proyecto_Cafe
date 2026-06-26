@@ -1,0 +1,65 @@
+version: '3.8'
+
+services:
+
+  mariadb:
+    image: mariadb:11
+    environment:
+      MARIADB_ROOT_PASSWORD: root
+    volumes:
+      - mariadb_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+
+  eureka-server:
+    build: ./eureka-server
+    ports:
+      - "8761:8761"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:8761/ || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  auth-service:
+    build: ./auth-service/auth-service
+    ports:
+      - "8085:8085"
+    environment:
+      DB_URL: jdbc:mariadb://mariadb:3306/cafe_auth
+      DB_USERNAME: root
+      DB_PASSWORD: root
+      EUREKA_URL: http://eureka-server:8761/eureka
+    depends_on:
+      mariadb:
+        condition: service_healthy
+      eureka-server:
+        condition: service_healthy
+    restart: on-failure
+
+  mesas-service:
+    build: ./mesas-service/mesas-service
+    ports:
+      - "8082:8082"
+    environment:
+      DB_URL: jdbc:mariadb://mariadb:3306/cafe_mesas
+      DB_USERNAME: root
+      DB_PASSWORD: root
+      EUREKA_URL: http://eureka-server:8761/eureka
+    depends_on:
+      mariadb:
+        condition: service_healthy
+      eureka-server:
+        condition: service_healthy
+    restart: on-failure
+
+volumes:
+  mariadb_data:
